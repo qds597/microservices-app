@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\RolesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,5 +30,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/change-password', [AuthController::class, 'change_password']);
     Route::post('/search-user', [AuthController::class, 'search']);
 
-    //Route::resource('/name_roles', )
 });
+
+Route::resource('/name_roles', [RolesController::class, 'name_roles']);
