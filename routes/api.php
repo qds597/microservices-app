@@ -32,4 +32,4 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 });
 
-Route::resource('/name_roles', [RolesController::class, 'name_roles']);
+Route::resource('/name_roles', [RolesController::class, 'name_roles'])->name('name_roles');
