@@ -1,33 +1,81 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Http\Controllers\Api;
 
-return new class extends Migration
+use App\Models\Roles;
+use App\Http\Controllers\Controller;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+class RolesController extends Controller
 {
     /**
-     * Run the migrations.
+     * Display a listing of the resource.
      */
-    public function up(): void
+    public function index()
     {
-        Schema::create('roles', function (Blueprint $table) {
-            $table->id();
-            //tambahkan baris ini
-            $table->string('nama_role');
-            //
-            $table->timestamps();
-        });
+        try {
+            $data = Roles::all();
+            $response = [
+                'success' => true,
+                'data' => $data,
+                'message' => 'Data tersedia',
+            ];
+
+            return response()->json($response, 200);
+        } catch (Exception $th) {
+            $response = [
+                'success' => false,
+                'message' => $th,
+            ];
+            return response()->json($response, 500);
+        }
     }
 
     /**
-     * Reverse the migrations.
+     * Store a newly created resource in storage.
      */
-    public function down(): void
-        {
-            Schema::dropIfExists('roles');
+    public function store(Request $request)
+    {
+
+        //isikan kode berikut
+        try {
+            //cek apakah request berisi nama_role atau tidak
+            $validator = Validator::make($request->all(), [
+                'nama_role' => 'required|string|max:255|unique:roles',
+            ]);
+
+            //kalau tidak akan mengembalikan error
+            if ($validator->fails()) {
+                return response()->json($validator->errors());
+            }
+
+            //kalau ya maka akan membuat roles baru
+            $data = Roles::create([
+                'nama_role' => $request->nama_role,
+            ]);
+
+            //data akan di kirimkan dalam bentuk response list
+            $response = [
+                'success' => true,
+                'data' => $data,
+                'message' => 'Data berhasil di simpan',
+            ];
+
+            //jika berhasil maka akan mengirimkan status code 200
+            return response()->json($response, 200);
+        } catch (Exception $th) {
+            $response = [
+                'success' => false,
+                'message' => $th,
+            ];
+            //jika error maka akan mengirimkan status code 500
+            return response()->json($response, 500);
         }
-    };
+
+    }
+
     /**
      * Display the specified resource.
      */
@@ -49,6 +97,7 @@ return new class extends Migration
             ];
             return response()->json($response, 500);
         }
+
     }
 
     /**
@@ -109,4 +158,6 @@ return new class extends Migration
             ];
             return response()->json($response, 500);
         }
+
     }
+}
