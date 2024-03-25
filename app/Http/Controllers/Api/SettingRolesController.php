@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\SettingRoles;
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SettingRolesController extends Controller
 {
@@ -13,7 +15,25 @@ class SettingRolesController extends Controller
      */
     public function index()
     {
-        //
+        {
+            try {
+                $data = SettingRolesController::all();
+                $response = [
+                    'success' => true,
+                    'data' => $data,
+                    'message' => 'Data tersedia',
+                ];
+
+                return response()->json($response, 200);
+            } catch (Exception $th) {
+                $response = [
+                    'success' => false,
+                    'message' => $th,
+                ];
+                return response()->json($response, 500);
+            }
+        }
+
     }
 
     /**
@@ -21,15 +41,65 @@ class SettingRolesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            //cek apakah request berisi nama_role atau tidak
+            $validator = Validator::make($request->all(), [
+                'users_id' => 'required',
+                'roles_id' => 'required',
+            ]);
+
+            //kalau tidak akan mengembalikan error
+            if ($validator->fails()) {
+                return response()->json($validator->errors());
+            }
+
+            //kalau ya maka akan membuat roles baru
+            $data = SettingRoles::create([
+                'users_id' => $request->users_id,
+                'roles_id' => $request->users_id,
+            ]);
+
+            //data akan di kirimkan dalam bentuk response list
+            $response = [
+                'success' => true,
+                'data' => $data,
+                'message' => 'Data berhasil di simpan',
+            ];
+
+            //jika berhasil maka akan mengirimkan status code 200
+            return response()->json($response, 200);
+        } catch (Exception $th) {
+            $response = [
+                'success' => false,
+                'message' => $th,
+            ];
+            //jika error maka akan mengirimkan status code 500
+            return response()->json($response, 500);
+        }
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(SettingRoles $settingRoles)
+    public function show($id)
     {
-        //
+        try {
+            $data = SettingRoles::find($id);
+            $response = [
+                'success' => true,
+                'data' => $data,
+                'message' => 'Data tersedia',
+            ];
+
+            return response()->json($response, 200);
+        } catch (Exception $th) {
+            $response = [
+                'success' => false,
+                'message' => $th,
+            ];
+            return response()->json($response, 500);
+        }
     }
 
     /**
@@ -37,14 +107,58 @@ class SettingRolesController extends Controller
      */
     public function update(Request $request, SettingRoles $settingRoles)
     {
-        //
+        try {
+            $validator = Validator::make($request->all(), [
+                'users_id' => 'required',
+                'roles_id' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors());
+            }
+
+            $data = SettingRoles::find('id');
+            $data->nama_role = $request->nama_role;
+            $data->save();
+
+            $response = [
+                'success' => true,
+                'data' => $data,
+                'message' => 'Data berhasil di ubah',
+            ];
+
+            return response()->json($response, 200);
+        } catch (Exception $th) {
+            $response = [
+                'success' => false,
+                'message' => $th,
+            ];
+            return response()->json($response, 500);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SettingRoles $settingRoles)
+    public function destroy($id)
     {
-        //
+        try {
+            $save = SettingRoles::find($id);
+            if ($save == null) {
+                return response()->json(['success' => false, 'message' => 'Periksa kembali data yang akan di hapus'], 404);
+            }
+            $save->delete();
+            $response = [
+                'success' => true,
+                'message' => 'Sukses menghapus data',
+            ];
+            return response()->json($response, 200);
+        } catch (Exception $th) {
+            $response = [
+                'success' => false,
+                'message' => $th,
+            ];
+            return response()->json($response, 500);
+        }
     }
 }
