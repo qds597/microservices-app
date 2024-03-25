@@ -56,7 +56,7 @@ class SettingRolesController extends Controller
             //kalau ya maka akan membuat roles baru
             $data = SettingRoles::create([
                 'users_id' => $request->users_id,
-                'roles_id' => $request->users_id,
+                'roles_id' => $request->roles_id,
             ]);
 
             //data akan di kirimkan dalam bentuk response list
