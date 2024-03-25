@@ -105,7 +105,7 @@ class SettingRolesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SettingRoles $settingRoles)
+    public function update(Request $request, $id)
     {
         try {
             $validator = Validator::make($request->all(), [
@@ -117,8 +117,9 @@ class SettingRolesController extends Controller
                 return response()->json($validator->errors());
             }
 
-            $data = SettingRoles::find('id');
-            $data->nama_role = $request->nama_role;
+            $data = SettingRoles::find($id);
+            $data->users_id = $request->users_id;
+            $data->roles_id = $request->roles_id;
             $data->save();
 
             $response = [
