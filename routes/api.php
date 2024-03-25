@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ProfilePerusahaanController;
 use App\Http\Controllers\Api\RolesController;
 use App\Http\Controllers\Api\SettingRolesController;
 use Illuminate\Http\Request;
@@ -33,4 +34,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::resource('roles', RolesController::class);
     Route::resource('setting_roles', SettingRolesController::class);
+    Route::resource('profil_perusahaan', ProfilePerusahaanController::class);
 });
