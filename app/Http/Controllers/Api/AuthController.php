@@ -140,7 +140,33 @@ class AuthController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                            ]);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors());
+            }
+
+            $data = User::find($id);
+            $data->name = $request->name;
+            $data->save();
+
+            $response = [
+                'success' => true,
+                'data' => $data,
+                'message' => 'Data Perusahaan berhasil diubah',
+            ];
+
+            return response()->json($response, 200);
+        } catch (Exception $th) {
+            $response = [
+                'success' => false,
+                'message' => 'Data Perusahaan tidak Ditemukan',
+            ];
+            return response()->json($response, 500);
+        }
     }
 
     /**

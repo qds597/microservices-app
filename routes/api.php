@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AbsenController;
 use App\Http\Controllers\Api\ProfilePerusahaanController;
 use App\Http\Controllers\Api\RolesController;
 use App\Http\Controllers\Api\SettingRolesController;
@@ -31,8 +32,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/change-password', [AuthController::class, 'change_password']);
     Route::post('/search-user', [AuthController::class, 'search']);
+    Route::put('/user/{id}', [AuthController::class, 'update']);
 
     Route::resource('roles', RolesController::class);
     Route::resource('setting_roles', SettingRolesController::class);
     Route::resource('profile_perusahaan', ProfilePerusahaanController::class);
+    Route::resource('absen', AbsenController::class);
 });
