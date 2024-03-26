@@ -16,7 +16,7 @@ class ProfilePerusahaanController extends Controller
     public function index()
     {
         try {
-            $data = ProfilePerusahaanController::all();
+            $data = ProfilePerusahaan::all();
             $response = [
                 'success' => true,
                 'data' => $data,
@@ -54,7 +54,7 @@ class ProfilePerusahaanController extends Controller
             }
 
             //kalau ya maka akan membuat roles baru
-            $data = ProfilePerusahaanController::create([
+            $data = ProfilePerusahaan::create([
                 'nama_perusahaan' => $request->nama_perusahaan,
                 'lokasi' => $request->lokasi,
                 'deskripsi' => $request->deskripsi,
@@ -88,7 +88,7 @@ class ProfilePerusahaanController extends Controller
     public function show($id)
     {
         try {
-            $data = ProfilePerusahaanController::find($id);
+            $data = ProfilePerusahaan::find($id);
             if ($data == null){
                 $response = [
                     'success' => false,
@@ -130,7 +130,7 @@ class ProfilePerusahaanController extends Controller
                 return response()->json($validator->errors());
             }
 
-            $data = ProfilePerusahaanController::find($id);
+            $data = ProfilePerusahaan::find($id);
             $data->nama_perusahaan = $request->nama_perusahaan;
             $data->deskripsi = $request->deskripsi;
             $data->lokasi = $request->lokasi;
@@ -160,7 +160,7 @@ class ProfilePerusahaanController extends Controller
     public function destroy($id)
     {
         try {
-            $save = ProfilePerusahaanController::find($id);
+            $save = ProfilePerusahaan::find($id);
             if ($save == null) {
                 return response()->json(['success' => false, 'message' => 'Periksa kembali data yang akan di hapus'], 404);
             }
