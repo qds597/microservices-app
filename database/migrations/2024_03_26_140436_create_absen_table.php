@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('users_id');
             $table->text('lokasi_user');
             $table->string('waktu_absen_masuk');
-            $table->string('waktu_absen_pulang');
+            $table->string('waktu_absen_pulang')->nullable();
             $table->string('tanggal_hari_ini');
             $table->timestamps();
         });
