@@ -16,7 +16,7 @@ class ProfilePerusahaanController extends Controller
     public function index()
     {
         try {
-            $data = ProfilePerusahaan::all();
+            $data = ProfilePerusahaanController::all();
             $response = [
                 'success' => true,
                 'data' => $data,
@@ -41,7 +41,7 @@ class ProfilePerusahaanController extends Controller
         try {
             //cek apakah request berisi nama_role atau tidak
             $validator = Validator::make($request->all(), [
-                'nama_perusahaan' => 'required|string|max:100|unique:profil_perusahaan',
+                'nama_perusahaan' => 'required',
                 'deskripsi' => 'required',
                 'lokasi' => 'required',
                 'jam_masuk' => 'required',
@@ -54,7 +54,7 @@ class ProfilePerusahaanController extends Controller
             }
 
             //kalau ya maka akan membuat roles baru
-            $data = ProfilePerusahaan::create([
+            $data = ProfilePerusahaanController::create([
                 'nama_perusahaan' => $request->nama_perusahaan,
                 'lokasi' => $request->lokasi,
                 'deskripsi' => $request->deskripsi,
@@ -88,7 +88,7 @@ class ProfilePerusahaanController extends Controller
     public function show($id)
     {
         try {
-            $data = ProfilePerusahaan::find($id);
+            $data = ProfilePerusahaanController::find($id);
             if ($data == null){
                 $response = [
                     'success' => false,
@@ -130,7 +130,7 @@ class ProfilePerusahaanController extends Controller
                 return response()->json($validator->errors());
             }
 
-            $data = ProfilePerusahaan::find($id);
+            $data = ProfilePerusahaanController::find($id);
             $data->nama_perusahaan = $request->nama_perusahaan;
             $data->deskripsi = $request->deskripsi;
             $data->lokasi = $request->lokasi;
@@ -157,8 +157,25 @@ class ProfilePerusahaanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProfilePerusahaan $profilePerusahaan)
+    public function destroy($id)
     {
-        //
+        try {
+            $save = ProfilePerusahaanController::find($id);
+            if ($save == null) {
+                return response()->json(['success' => false, 'message' => 'Periksa kembali data yang akan di hapus'], 404);
+            }
+            $save->delete();
+            $response = [
+                'success' => true,
+                'message' => 'Sukses menghapus data',
+            ];
+            return response()->json($response, 200);
+        } catch (Exception $th) {
+            $response = [
+                'success' => false,
+                'message' => $th,
+            ];
+            return response()->json($response, 500);
+        }
     }
 }
