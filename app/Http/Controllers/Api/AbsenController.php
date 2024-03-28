@@ -46,7 +46,6 @@ class AbsenController extends Controller
                 'lokasi_user' => 'required',
                 'waktu_absen_masuk' => 'required',
                 'tanggal_hari_ini' => 'required',
-                'status' => 'required',
             ]);
 
             // cek apakah sudah absen masuk/belum
