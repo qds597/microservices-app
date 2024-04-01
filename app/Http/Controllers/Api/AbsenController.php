@@ -77,7 +77,7 @@ class AbsenController extends Controller
                 'lokasi_user' => $request->lokasi_user,
                 'waktu_absen_masuk' => $request->waktu_absen_masuk,
                 'tanggal_hari_ini' => $request->tanggal_hari_ini,
-                'status' => $request->status,
+                'status' => $status,
             ]);
 
             //data akan di kirimkan dalam bentuk response list
