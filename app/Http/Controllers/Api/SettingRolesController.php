@@ -15,9 +15,9 @@ class SettingRolesController extends Controller
      */
     public function index()
     {
-        {
+
             try {
-                $data = SettingRolesController::all();
+                $data = SettingRoles::all();
                 $response = [
                     'success' => true,
                     'data' => $data,
@@ -31,7 +31,7 @@ class SettingRolesController extends Controller
                     'message' => $th,
                 ];
                 return response()->json($response, 500);
-            }
+
         }
 
     }

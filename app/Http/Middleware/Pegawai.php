@@ -21,7 +21,7 @@ class Pegawai
         if (Auth::user() != null) {
             //cek apakah user tersebut merupakan roles id = 5 atau bukan
             //roles_id 5 merupakan pegawai untuk di kasus yang saya, silahkan temen2 disesuaikan id nya ya
-            $cek = SettingRoles::where(['users_id' => Auth::user()->id, 'roles_id' => '5'])->first();
+            $cek = SettingRoles::where(['users_id' => Auth::user()->id, 'roles_id' => '2'])->first();
             //kalau tidak ada setting role nya akan mengembalikan error 500
             if ($cek == null) {
                 $response = [
