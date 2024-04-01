@@ -38,10 +38,10 @@ Route::middleware(['auth:sanctum', 'Admin'])->prefix('admin')->group(function ()
     Route::post('/search-user', [AuthController::class, 'search']);
     Route::resource('roles', RolesController::class);
     Route::resource('setting_roles', SettingRolesController::class);
-    Route::resource('profil_perusahaan', ProfilePerusahaanController::class);
+    Route::resource('profile_perusahaan', ProfilePerusahaanController::class);
     Route::resource('absen', AbsenController::class);
 });
 
     Route::middleware(['auth:sanctum', 'Pegawai'])->prefix('pegawai')->group(function () {
         //
-    });
+});
