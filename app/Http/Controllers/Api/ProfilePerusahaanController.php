@@ -43,7 +43,8 @@ class ProfilePerusahaanController extends Controller
             $validator = Validator::make($request->all(), [
                 'nama_perusahaan' => 'required',
                 'deskripsi' => 'required',
-                'lokasi' => 'required',
+                'latitude' => 'required',
+                'longitude' => 'required',
                 'jam_masuk' => 'required',
                 'jam_pulang' => 'required',
             ]);
@@ -56,7 +57,8 @@ class ProfilePerusahaanController extends Controller
             //kalau ya maka akan membuat roles baru
             $data = ProfilePerusahaan::create([
                 'nama_perusahaan' => $request->nama_perusahaan,
-                'lokasi' => $request->lokasi,
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
                 'deskripsi' => $request->deskripsi,
                 'jam_masuk' => $request->jam_masuk,
                 'jam_pulang' => $request->jam_pulang,
@@ -121,7 +123,8 @@ class ProfilePerusahaanController extends Controller
             $validator = Validator::make($request->all(), [
                 'nama_perusahaan' => 'required',
                 'deskripsi' => 'required',
-                'lokasi' => 'required',
+                'latitude' => 'required',
+                'longitude' => 'required',
                 'jam_masuk' => 'required',
                 'jam_pulang' => 'required',
                             ]);
@@ -133,23 +136,27 @@ class ProfilePerusahaanController extends Controller
             $data = ProfilePerusahaan::find($id);
             $data->nama_perusahaan = $request->nama_perusahaan;
             $data->deskripsi = $request->deskripsi;
-            $data->lokasi = $request->lokasi;
+            $data->latitude = $request->latitude;
+            $data->longitude = $request->longitude;
             $data->jam_masuk = $request->jam_masuk;
             $data->jam_pulang = $request->jam_pulang;
             $data->save();
 
+            //data akan di kirimkan dalam bentuk response list
             $response = [
                 'success' => true,
                 'data' => $data,
-                'message' => 'Data Perusahaan berhasil diubah',
+                'message' => 'Data perusahaan berhasil diubah',
             ];
 
+            //Jika berhasil maka akan mengirimkan status kode 200
             return response()->json($response, 200);
         } catch (Exception $th) {
             $response = [
                 'success' => false,
-                'message' => 'Data Perusahaan tidak Ditemukan',
+                'message' => 'Data perusahaan tidak ditemukan',
             ];
+            //Jika error akan mengirimkan status kode 500
             return response()->json($response, 500);
         }
     }
