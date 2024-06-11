@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\SettingRoles;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -45,9 +46,15 @@ class AuthController extends Controller
         }
         // $request->session()->regenerate();
         $user = User::where('email', $request['email'])->firstOrFail();
+        $roles = SettingRoles::where('users_id', $user->id)->get();
+        if ($roles == null) {
+            auth()->user()->tokens()->delete();
+            return response()
+                ->json(['success' => false, 'message' => 'You are not allowed, please contact admin!'], 401);
+        }
+
         // $request->user()->tokens()->delete();
         $token = $user->createToken('auth_token')->plainTextToken;
-
         return response()
             ->json(['success' => true, 'message' => 'Hi ' . $user->name . ', welcome to Siakad Politeknik Takumi', 'access_token' => $token, 'email' => $user->email]);
     }
