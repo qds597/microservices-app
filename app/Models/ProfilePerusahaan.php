@@ -16,6 +16,5 @@ class ProfilePerusahaan extends Model
         'longitude',
         'jam_masuk',
         'jam_pulang',
-        'image',
     ];
 }

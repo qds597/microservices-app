@@ -28,7 +28,7 @@ class AuthController extends Controller
 
         $user = User::create([
             'name' => $request->name,
-            'email' => $request->email,  
+            'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
@@ -56,7 +56,7 @@ class AuthController extends Controller
         // $request->user()->tokens()->delete();
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()
-            ->json(['success' => true, 'message' => 'Hi ' . $user->name . ', welcome to Siakad Politeknik Takumi', 'access_token' => $token, 'email' => $user->email, 'user_id' => $user->id]);
+            ->json(['success' => true, 'message' => 'Hi ' . $user->name . ', welcome to Siakad Politeknik Takumi', 'access_token' => $token, 'email' => $user->email, 'users_id' => $user->id]);
     }
 
     public function logout(Request $request)

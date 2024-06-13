@@ -41,7 +41,7 @@ class ProfilePerusahaanController extends Controller
         try {
             //cek apakah request berisi nama_role atau tidak
             $validator = Validator::make($request->all(), [
-                'nama_perusahaan' => 'required',
+                'nama_perusahaan' => 'required|string|max:100|unique:profil_perusahaan',
                 'deskripsi' => 'required',
                 'latitude' => 'required',
                 'longitude' => 'required',

@@ -32,7 +32,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/change-password', [AuthController::class, 'change_password']);
     //Absen
     Route::get('/cek_absen_hari_ini/{users_id}/{tanggal_hari_ini}',[AbsenController::class, 'cek_absen_hari_ini']);
-    Route::get('/absen/history/{users_id}', [AbsenController::class, 'absen_history']);
+    Route::get('/absen_history/{users_id}', [AbsenController::class, 'absen_history']);
 });
 
 Route::middleware(['auth:sanctum', 'Admin'])->prefix('admin')->group(function () {
