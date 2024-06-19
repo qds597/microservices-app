@@ -53,7 +53,7 @@ class RolesController extends Controller
 
             //kalau ya maka akan membuat roles baru
             $data = Roles::create([
-                'name_roles' => $request->name_role,
+                'name_roles' => $request->name_roles,
             ]);
 
             //data akan di kirimkan dalam bentuk response list
@@ -115,7 +115,7 @@ class RolesController extends Controller
             }
 
             $data = Roles::find($id);
-            $data->nama_role = $request->nama_role;
+            $data->nama_roles = $request->nama_roles;
             $data->save();
 
             $response = [
