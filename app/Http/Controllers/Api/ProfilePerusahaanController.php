@@ -41,7 +41,7 @@ class ProfilePerusahaanController extends Controller
         try {
             //cek apakah request berisi nama_role atau tidak
             $validator = Validator::make($request->all(), [
-                'nama_perusahaan' => 'required|string|max:100|unique:profil_perusahaan',
+                'nama_perusahaan' => 'required|string|max:100|unique:profile_perusahaan',
                 'deskripsi' => 'required',
                 'latitude' => 'required',
                 'longitude' => 'required',
@@ -69,7 +69,7 @@ class ProfilePerusahaanController extends Controller
             $response = [
                 'success' => true,
                 'data' => $data,
-                'message' => 'Profil Perusahaan berhasil disimpan',
+                'message' => 'Profile Perusahaan berhasil disimpan',
             ];
 
             //jika berhasil maka akan mengirimkan status code 200
